@@ -1,3 +1,13 @@
+
+###### REAL, practical, industry-level uses of the Two Sum pattern, with actual real-world examples and code (Python, but easy to convert).
+Not just toy problems — these are real use cases #####
+
 ✅ Two Sum — Real Practical Code (Python)
 
-Approach used in real projects: **HashMap** (Dictionary)
+Approach used in real projects: HashMap (Dictionary)
+
+Why?
+O(n) time (fast)
+O(n) space
+
+Works in real coding interviews and production systems
