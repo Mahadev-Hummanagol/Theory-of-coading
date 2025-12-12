@@ -6,3 +6,44 @@ Example 1:
 Input: nums = [1, 2, 3, 3]
 
 Output: true
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+🏥 Healthcare — Duplicate Patient Records
+
+Hospitals must avoid same patient registered multiple times.
+
+Example fields:
+Aadhaar number
+Mobile number
+Insurance policy ID
+
+patients = [
+    ("Aadhaar:1234", "Raju"),
+    ("Aadhaar:5678", "Kiran"),
+    ("Aadhaar:1234", "Raju"),  # duplicate
+]
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+🔒 Fraud Detection in Banking
+Problem
+Same customer tries to deposit a cheque multiple times (Duplicate Check Deposit).
+Real Event Stream Example
+
+transactions = [
+    ("CHK123", "Naveen", 5000), 
+    ("CHK124", "Rahul", 7000), 
+    ("CHK123", "Naveen", 5000),  # Duplicate cheque ID
+]
+
+
+def has_duplicate_cheques(transactions):
+    seen = set()
+    for cheque_id, name, amount in transactions:
+        if cheque_id in seen:
+            print("⚠️ Fraud alert: Duplicate cheque:", cheque_id)
+            return True
+        seen.add(cheque_id)
+    return False
+
