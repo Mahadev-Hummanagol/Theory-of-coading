@@ -63,3 +63,35 @@ def is_anagram(s: str, t: str) -> bool:
 
     return True
 
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+def is_anagram(s: str, t: str) -> bool:
+    if len(s) != len(t):
+        return False
+
+    count = [0] * 26   # hash array for 'a' to 'z'
+
+    for ch in s:
+        count[ord(ch) - ord('a')] += 1
+
+    for ch in t:
+        count[ord(ch) - ord('a')] -= 1
+
+    # If any value not zero => mismatch
+    for val in count:
+        if val != 0:
+            return False
+
+    return True
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+simplest and cleanest way to find the frequency of each character in a word.
+def char_frequency(word):
+    freq = {}
+
+    for ch in word:
+        freq[ch] = freq.get(ch, 0) + 1
+
+    return freq
+print(char_frequency("banana"))
+{'b': 1, 'a': 3, 'n': 2}
+
