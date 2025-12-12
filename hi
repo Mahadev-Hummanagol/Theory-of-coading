@@ -2,12 +2,101 @@
 ###### REAL, practical, industry-level uses of the Two Sum pattern, with actual real-world examples and code (Python, but easy to convert).
 Not just toy problems — these are real use cases #####
 
-✅ Two Sum — Real Practical Code (Python)
+                                                                                                                ✅ Two Sum — Real Practical Code (Python)
+                                                                                                                
+                                                                                                                Approach used in real projects: HashMap (Dictionary)
+                                                                                                                
+                                                                                                                Why?
+                                                                                                                O(n) time (fast)
+                                                                                                                O(n) space
+                                                                                                                
+                                                                                                                Works in real coding interviews and production systems
 
-Approach used in real projects: HashMap (Dictionary)
 
-Why?
-O(n) time (fast)
-O(n) space
+####################################################################################################################################################################################
+✅ 1. Fraud Detection: suspicious pair of transactions equal threshold
 
-Works in real coding interviews and production systems
+Use case:
+Banks detect fraud if two transactions within a short window sum to a suspicious amount, like ₹50,000.
+
+def detect_suspicious_pair(transactions, threshold):
+    seen = {}  # amount -> transaction_id
+
+    for txn_id, amount in transactions:
+        need = threshold - amount
+
+        if need in seen:
+            return ("Fraud Detected", seen[need], txn_id)
+
+        seen[amount] = txn_id
+
+    return ("No fraud",)
+
+Input:
+transactions = [
+    (101, 20000),
+    (102, 30000),
+    (103, 35000),
+]
+print(detect_suspicious_pair(transactions, 50000))
+
+Output:
+("Fraud Detected", 101, 102)
+
+Start
+ │
+ ▼
+Seen = { } (empty)
+
+──────────────────────────────────────
+Transaction 1:  (101, 20000)
+──────────────────────────────────────
+need = 50000 - 20000 = 30000
+
+Is 30000 in seen?   NO
+ │
+ ▼
+Add to seen:
+seen = { 20000 : 101 }
+
+──────────────────────────────────────
+Transaction 2:  (102, 30000)
+──────────────────────────────────────
+need = 50000 - 30000 = 20000
+
+Is 20000 in seen?   YES ✔
+ │
+ ▼
+PAIR FOUND!
+Fraud Detected between:
+  (101, 20000)
+  (102, 30000)
+──────────────────────────────────────
+Stop.
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+. ML Feature Engineering: Check if any two values in feature vector hit a target
+
+Used when engineering features for fraud/finance ML models.
+def pair_exists_feature(vec, target):
+    seen = set()  # we only need values, not indices
+
+    for v in vec:
+        need = target - v
+        if need in seen:
+            return True
+        seen.add(v)
+    return False
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+Payments / Wallet Apps
+
+Check among multiple outgoing payments if any two combine to exceed daily limit.
+
+Example:
+Daily limit = ₹1,00,000
+If two payments = 45,000 + 55,000 → block.
+
+
