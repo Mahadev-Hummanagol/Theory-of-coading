@@ -5,3 +5,61 @@ An anagram is a string that contains the exact same characters as another string
 Example 1:
 Input: s = "racecar", t = "carrace"
 Output: true
+
+def is_anagram(s: str, t: str) -> bool:
+    if len(s) != len(t):
+        return False
+
+    freq = {}  # HashMap
+
+    # Build count for s
+    for ch in s:
+        if ch in freq:
+            freq[ch] += 1
+        else:
+            freq[ch] = 1
+
+    # Subtract using t
+    for ch in t:
+        if ch not in freq:
+            return False
+        freq[ch] -= 1
+        if freq[ch] == 0:
+            del freq[ch]    # remove empty entry (optional, but clean)
+
+    # If hashmap empty ⇒ all matched
+    return len(freq) == 0
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+freq = {}
+print(len(freq) == 0)   # True
+python
+Copy code
+freq = {"a": 1}
+print(len(freq) == 0)   # False
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+def is_anagram(s: str, t: str) -> bool:
+    # If lengths differ, they cannot be anagrams
+    if len(s) != len(t):
+        return False
+
+    freq = {}  # HashMap: character -> count
+
+    # Count frequency of each character in s
+    for ch in s:
+        freq[ch] = freq.get(ch, 0) + 1
+
+    # Reduce count using t
+    for ch in t:
+        if ch not in freq:
+            return False  # character in t not present in s
+        freq[ch] -= 1
+        if freq[ch] < 0:
+            return False  # more occurrences in t than in s
+
+    return True
+
