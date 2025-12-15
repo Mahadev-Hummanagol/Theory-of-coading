@@ -1,0 +1,433 @@
+
+
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        closeToOpen = { ")" : "(", "]" : "[", "}" : "{" }
+
+        for c in s:
+            if c in closeToOpen:
+                if stack and stack[-1] == closeToOpen[c]:
+                    stack.pop()
+                else:
+                    return False
+            else:
+                stack.append(c)
+
+        return True if not stack else False
+
+
+class MinStack:
+
+    def __init__(self):
+        self.stack = []
+
+    def push(self, val: int) -> None:
+        self.stack.append(val)
+
+    def pop(self) -> None:
+        self.stack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1]
+
+    def getMin(self) -> int:
+        tmp = []
+        mini = self.stack[-1]
+
+        while len(self.stack):
+            mini = min(mini, self.stack[-1])
+            tmp.append(self.stack.pop())
+
+        while len(tmp):
+            self.stack.append(tmp.pop())
+
+        return mini
+
+
+class MinStack:
+    def __init__(self):
+        self.stack = []
+        self.minStack = []
+
+    def push(self, val: int) -> None:
+        self.stack.append(val)
+        val = min(val, self.minStack[-1] if self.minStack else val)
+        self.minStack.append(val)
+
+    def pop(self) -> None:
+        self.stack.pop()
+        self.minStack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1]
+
+    def getMin(self) -> int:
+        return self.minStack[-1]
+
+
+class MinStack:
+    def __init__(self):
+        self.min = float('inf')
+        self.stack = []
+
+    def push(self, val: int) -> None:
+        if not self.stack:
+            self.stack.append(0)
+            self.min = val
+        else:
+            self.stack.append(val - self.min)
+            if val < self.min:
+                self.min = val
+
+    def pop(self) -> None:
+        if not self.stack:
+            return
+
+        pop = self.stack.pop()
+
+        if pop < 0:
+            self.min = self.min - pop
+
+    def top(self) -> int:
+        top = self.stack[-1]
+        if top > 0:
+            return top + self.min
+        else:
+            return self.min
+
+    def getMin(self) -> int:
+        return self.min
+
+
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        while len(tokens) > 1:
+            for i in range(len(tokens)):
+                if tokens[i] in "+-*/":
+                    a = int(tokens[i-2])
+                    b = int(tokens[i-1])
+                    if tokens[i] == '+':
+                        result = a + b
+                    elif tokens[i] == '-':
+                        result = a - b
+                    elif tokens[i] == '*':
+                        result = a * b
+                    elif tokens[i] == '/':
+                        result = int(a / b)
+                    tokens = tokens[:i-2] + [str(result)] + tokens[i+1:]
+                    break
+        return int(tokens[0])
+
+
+class DoublyLinkedList:
+    def __init__(self, val, next=None, prev=None):
+        self.val = val
+        self.next = next
+        self.prev = prev
+
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        head = DoublyLinkedList(tokens[0])
+        curr = head
+
+        for i in range(1, len(tokens)):
+            curr.next = DoublyLinkedList(tokens[i], prev=curr)
+            curr = curr.next
+
+        while head is not None:
+            if head.val in "+-*/":
+                l = int(head.prev.prev.val)
+                r = int(head.prev.val)
+                if head.val == '+':
+                    res = l + r
+                elif head.val == '-':
+                    res = l - r
+                elif head.val == '*':
+                    res = l * r
+                else:
+                    res = int(l / r)
+
+                head.val = str(res)
+                head.prev = head.prev.prev.prev
+                if head.prev is not None:
+                    head.prev.next = head
+
+            ans = int(head.val)
+            head = head.next
+
+        return ans
+
+
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        def dfs():
+            token = tokens.pop()
+            if token not in "+-*/":
+                return int(token)
+
+            right = dfs()
+            left = dfs()
+
+            if token == '+':
+                return left + right
+            elif token == '-':
+                return left - right
+            elif token == '*':
+                return left * right
+            elif token == '/':
+                return int(left / right)
+
+        return dfs()
+
+
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        stack = []
+        for c in tokens:
+            if c == "+":
+                stack.append(stack.pop() + stack.pop())
+            elif c == "-":
+                a, b = stack.pop(), stack.pop()
+                stack.append(b - a)
+            elif c == "*":
+                stack.append(stack.pop() * stack.pop())
+            elif c == "/":
+                a, b = stack.pop(), stack.pop()
+                stack.append(int(float(b) / a))
+            else:
+                stack.append(int(c))
+        return stack[0]
+
+
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        n = len(temperatures)
+        res = []
+
+        for i in range(n):
+            count = 1
+            j = i + 1
+            while j < n:
+                if temperatures[j] > temperatures[i]:
+                    break
+                j += 1
+                count += 1
+            count = 0 if j == n else count
+            res.append(count)
+        return res
+
+
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        res = [0] * len(temperatures)
+        stack = []  # pair: [temp, index]
+
+        for i, t in enumerate(temperatures):
+            while stack and t > stack[-1][0]:
+                stackT, stackInd = stack.pop()
+                res[stackInd] = i - stackInd
+            stack.append((t, i))
+        return res
+
+
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        n = len(temperatures)
+        res = [0] * n
+
+        for i in range(n - 2, -1, -1):
+            j = i + 1
+            while j < n and temperatures[j] <= temperatures[i]:
+                if res[j] == 0:
+                    j = n
+                    break
+                j += res[j]
+
+            if j < n:
+                res[i] = j - i
+        return res
+
+
+class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        pair = [(p, s) for p, s in zip(position, speed)]
+        pair.sort(reverse=True)
+        stack = []
+        for p, s in pair:  # Reverse Sorted Order
+            stack.append((target - p) / s)
+            if len(stack) >= 2 and stack[-1] <= stack[-2]:
+                stack.pop()
+        return len(stack)
+
+
+class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        pair = [(p, s) for p, s in zip(position, speed)]
+        pair.sort(reverse=True)
+
+        fleets = 1
+        prevTime = (target - pair[0][0]) / pair[0][1]
+        for i in range(1, len(pair)):
+            currCar = pair[i]
+            currTime = (target - currCar[0]) / currCar[1]
+            if currTime > prevTime:
+                fleets += 1
+                prevTime = currTime
+        return fleets
+
+
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        n = len(heights)
+        maxArea = 0
+
+        for i in range(n):
+            height = heights[i]
+
+            rightMost = i + 1
+            while rightMost < n and heights[rightMost] >= height:
+                rightMost += 1
+
+            leftMost = i
+            while leftMost >= 0 and heights[leftMost] >= height:
+                leftMost -= 1
+
+            rightMost -= 1
+            leftMost += 1
+            maxArea = max(maxArea, height * (rightMost - leftMost + 1))
+        return maxArea
+
+
+
+class MinIdx_Segtree:
+    def __init__(self, N, A):
+        self.n = N
+        self.INF = int(1e9)
+        self.A = A
+        while (self.n & (self.n - 1)) != 0:
+            self.A.append(self.INF)
+            self.n += 1
+        self.tree = [0] * (2 * self.n)
+        self.build()
+
+    def build(self):
+        for i in range(self.n):
+            self.tree[self.n + i] = i
+        for j in range(self.n - 1, 0, -1):
+            a = self.tree[j << 1]
+            b = self.tree[(j << 1) + 1]
+            if self.A[a] <= self.A[b]:
+                self.tree[j] = a
+            else:
+                self.tree[j] = b
+
+    def update(self, i, val):
+        self.A[i] = val
+        j = (self.n + i) >> 1
+        while j >= 1:
+            a = self.tree[j << 1]
+            b = self.tree[(j << 1) + 1]
+            if self.A[a] <= self.A[b]:
+                self.tree[j] = a
+            else:
+                self.tree[j] = b
+            j >>= 1
+
+    def query(self, ql, qh):
+        return self._query(1, 0, self.n - 1, ql, qh)
+
+    def _query(self, node, l, h, ql, qh):
+        if ql > h or qh < l:
+            return self.INF
+        if l >= ql and h <= qh:
+            return self.tree[node]
+        a = self._query(node << 1, l, (l + h) >> 1, ql, qh)
+        b = self._query((node << 1) + 1, ((l + h) >> 1) + 1, h, ql, qh)
+        if a == self.INF:
+            return b
+        if b == self.INF:
+            return a
+        return a if self.A[a] <= self.A[b] else b
+
+class Solution:
+    def getMaxArea(self, heights, l, r, st):
+        if l > r:
+            return 0
+        if l == r:
+            return heights[l]
+        minIdx = st.query(l, r)
+        return max(max(self.getMaxArea(heights, l, minIdx - 1, st),
+                       self.getMaxArea(heights, minIdx + 1, r, st)),
+                   (r - l + 1) * heights[minIdx])
+
+    def largestRectangleArea(self, heights):
+        n = len(heights)
+        st = MinIdx_Segtree(n, heights)
+        return self.getMaxArea(heights, 0, n - 1, st)
+
+
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        n = len(heights)
+        stack = []
+
+        leftMost = [-1] * n
+        for i in range(n):
+            while stack and heights[stack[-1]] >= heights[i]:
+                stack.pop()
+            if stack:
+                leftMost[i] = stack[-1]
+            stack.append(i)
+
+        stack = []
+        rightMost = [n] * n
+        for i in range(n - 1, -1, -1):
+            while stack and heights[stack[-1]] >= heights[i]:
+                stack.pop()
+            if stack:
+                rightMost[i] = stack[-1]
+            stack.append(i)
+
+        maxArea = 0
+        for i in range(n):
+            leftMost[i] += 1
+            rightMost[i] -= 1
+            maxArea = max(maxArea, heights[i] * (rightMost[i] - leftMost[i] + 1))
+        return maxArea
+
+
+
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        maxArea = 0
+        stack = []  # pair: (index, height)
+
+        for i, h in enumerate(heights):
+            start = i
+            while stack and stack[-1][1] > h:
+                index, height = stack.pop()
+                maxArea = max(maxArea, height * (i - index))
+                start = index
+            stack.append((start, h))
+
+        for i, h in stack:
+            maxArea = max(maxArea, h * (len(heights) - i))
+        return maxArea
+
+
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        n = len(heights)
+        maxArea = 0
+        stack = []
+
+        for i in range(n + 1):
+            while stack and (i == n  or heights[stack[-1]] >= heights[i]):
+                height = heights[stack.pop()]
+                width = i if not stack else i - stack[-1] - 1
+                maxArea = max(maxArea, height * width)
+            stack.append(i)
+        return maxArea
+
+

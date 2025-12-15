@@ -1,0 +1,1105 @@
+
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+
+        def dfs(i):
+            if i >= n:
+                return i == n
+            return dfs(i + 1) + dfs(i + 2)
+
+        return dfs(0)
+
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        cache = [-1] * n
+        def dfs(i):
+            if i >= n:
+                return i == n
+            if cache[i] != -1:
+                return cache[i]
+            cache[i] = dfs(i + 1) + dfs(i + 2)
+            return cache[i]
+
+        return dfs(0)
+
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n <= 2:
+            return n
+        dp = [0] * (n + 1)
+        dp[1], dp[2] = 1, 2
+        for i in range(3, n + 1):
+            dp[i] = dp[i - 1] + dp[i - 2]
+        return dp[n]
+
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        one, two = 1, 1
+
+        for i in range(n - 1):
+            temp = one
+            one = one + two
+            two = temp
+
+        return one
+
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n == 1:
+            return 1
+
+        def matrix_mult(A, B):
+            return [[A[0][0] * B[0][0] + A[0][1] * B[1][0],
+                     A[0][0] * B[0][1] + A[0][1] * B[1][1]],
+                    [A[1][0] * B[0][0] + A[1][1] * B[1][0],
+                     A[1][0] * B[0][1] + A[1][1] * B[1][1]]]
+
+        def matrix_pow(M, p):
+            result = [[1, 0], [0, 1]]
+            base = M
+
+            while p:
+                if p % 2 == 1:
+                    result = matrix_mult(result, base)
+                base = matrix_mult(base, base)
+                p //= 2
+
+            return result
+
+        M = [[1, 1], [1, 0]]
+        result = matrix_pow(M, n)
+        return result[0][0]
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        sqrt5 = math.sqrt(5)
+        phi = (1 + sqrt5) / 2
+        psi = (1 - sqrt5) / 2
+        n += 1
+        return round((phi**n - psi**n) / sqrt5)
+
+
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+
+        def dfs(i):
+            if i >= len(cost):
+                return 0
+            return cost[i] + min(dfs(i + 1), dfs(i + 2))
+
+        return min(dfs(0), dfs(1))
+
+
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        memo = [-1] * len(cost)
+
+        def dfs(i):
+            if i >= len(cost):
+                return 0
+            if memo[i] != -1:
+                return memo[i]
+            memo[i] = cost[i] + min(dfs(i + 1), dfs(i + 2))
+            return memo[i]
+
+        return min(dfs(0), dfs(1))
+
+
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        n = len(cost)
+        dp = [0] * (n + 1)
+
+        for i in range(2, n + 1):
+            dp[i] = min(dp[i - 1] + cost[i - 1],
+                        dp[i - 2] + cost[i - 2])
+
+        return dp[n]
+
+
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        for i in range(len(cost) - 3, -1, -1):
+            cost[i] += min(cost[i + 1], cost[i + 2])
+
+        return min(cost[0], cost[1])
+
+
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+
+        def dfs(i):
+            if i >= len(cost):
+                return 0
+            return cost[i] + min(dfs(i + 1), dfs(i + 2))
+
+        return min(dfs(0), dfs(1))
+
+
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        memo = [-1] * len(cost)
+
+        def dfs(i):
+            if i >= len(cost):
+                return 0
+            if memo[i] != -1:
+                return memo[i]
+            memo[i] = cost[i] + min(dfs(i + 1), dfs(i + 2))
+            return memo[i]
+
+        return min(dfs(0), dfs(1))
+
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        n = len(cost)
+        dp = [0] * (n + 1)
+
+        for i in range(2, n + 1):
+            dp[i] = min(dp[i - 1] + cost[i - 1],
+                        dp[i - 2] + cost[i - 2])
+
+        return dp[n]
+
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        for i in range(len(cost) - 3, -1, -1):
+            cost[i] += min(cost[i + 1], cost[i + 2])
+
+        return min(cost[0], cost[1])
+
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+
+        def dfs(i):
+            if i >= len(nums):
+                return 0
+            return max(dfs(i + 1),
+                       nums[i] + dfs(i + 2))
+
+        return dfs(0)
+
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        memo = [-1] * len(nums)
+
+        def dfs(i):
+            if i >= len(nums):
+                return 0
+            if memo[i] != -1:
+                return memo[i]
+            memo[i] = max(dfs(i + 1), nums[i] + dfs(i + 2))
+            return memo[i]
+
+        return dfs(0)
+
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        if len(nums) == 1:
+            return nums[0]
+
+        dp = [0] * len(nums)
+        dp[0] = nums[0]
+        dp[1] = max(nums[0], nums[1])
+
+        for i in range(2, len(nums)):
+            dp[i] = max(dp[i - 1], nums[i] + dp[i - 2])
+
+        return dp[-1]
+
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        rob1, rob2 = 0, 0
+
+        for num in nums:
+            temp = max(num + rob1, rob2)
+            rob1 = rob2
+            rob2 = temp
+        return rob2
+
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return nums[0]
+        def dfs(i, flag):
+            if i >= len(nums) or (flag and i == len(nums) - 1):
+                return 0
+
+            return max(dfs(i + 1, flag),
+                       nums[i] + dfs(i + 2, flag or i == 0))
+        return max(dfs(0, True), dfs(1, False))
+
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return nums[0]
+
+        memo = [[-1] * 2 for _ in range(len(nums))]
+
+        def dfs(i, flag):
+            if i >= len(nums) or (flag and i == len(nums) - 1):
+                return 0
+            if memo[i][flag] != -1:
+                return memo[i][flag]
+            memo[i][flag] = max(dfs(i + 1, flag),
+                            nums[i] + dfs(i + 2, flag or (i == 0)))
+            return memo[i][flag]
+
+        return max(dfs(0, True), dfs(1, False))
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return nums[0]
+        return max(self.helper(nums[1:]),
+                   self.helper(nums[:-1]))
+
+    def helper(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        if len(nums) == 1:
+            return nums[0]
+
+        dp = [0] * len(nums)
+        dp[0] = nums[0]
+        dp[1] = max(nums[0], nums[1])
+
+        for i in range(2, len(nums)):
+            dp[i] = max(dp[i - 1], nums[i] + dp[i - 2])
+
+        return dp[-1]
+
+
+class Solution:
+
+    def rob(self, nums: List[int]) -> int:
+        return max(nums[0], self.helper(nums[1:]),
+                            self.helper(nums[:-1]))
+
+    def helper(self, nums):
+        rob1, rob2 = 0, 0
+
+        for num in nums:
+            newRob = max(rob1 + num, rob2)
+            rob1 = rob2
+            rob2 = newRob
+        return rob2
+
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        res, resLen = "", 0
+
+        for i in range(len(s)):
+            for j in range(i, len(s)):
+                l, r = i, j
+                while l < r and s[l] == s[r]:
+                    l += 1
+                    r -= 1
+
+                if l >= r and resLen < (j - i + 1):
+                    res = s[i : j + 1]
+                    resLen = j - i + 1
+        return res
+
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        resIdx, resLen = 0, 0
+        n = len(s)
+
+        dp = [[False] * n for _ in range(n)]
+
+        for i in range(n - 1, -1, -1):
+            for j in range(i, n):
+                if s[i] == s[j] and (j - i <= 2 or dp[i + 1][j - 1]):
+                    dp[i][j] = True
+                    if resLen < (j - i + 1):
+                        resIdx = i
+                        resLen = j - i + 1
+
+        return s[resIdx : resIdx + resLen]
+
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        resIdx = 0
+        resLen = 0
+
+        for i in range(len(s)):
+            # odd length
+            l, r = i, i
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                if (r - l + 1) > resLen:
+                    resIdx = l
+                    resLen = r - l + 1
+                l -= 1
+                r += 1
+
+            # even length
+            l, r = i, i + 1
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                if (r - l + 1) > resLen:
+                    resIdx = l
+                    resLen = r - l + 1
+                l -= 1
+                r += 1
+
+        return s[resIdx : resIdx + resLen]
+
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        def manacher(s):
+            t = '#' + '#'.join(s) + '#'
+            n = len(t)
+            p = [0] * n
+            l, r = 0, 0
+            for i in range(n):
+                p[i] = min(r - i, p[l + (r - i)]) if i < r else 0
+                while (i + p[i] + 1 < n and i - p[i] - 1 >= 0
+                       and t[i + p[i] + 1] == t[i - p[i] - 1]):
+                    p[i] += 1
+                if i + p[i] > r:
+                    l, r = i - p[i], i + p[i]
+            return p
+
+        p = manacher(s)
+        resLen, center_idx = max((v, i) for i, v in enumerate(p))
+        resIdx = (center_idx - resLen) // 2
+        return s[resIdx : resIdx + resLen]
+
+
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        res = 0
+
+        for i in range(len(s)):
+            for j in range(i, len(s)):
+                l, r = i, j
+                while l < r and s[l] == s[r]:
+                    l += 1
+                    r -= 1
+                res += (l >= r)
+
+        return res
+
+
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        n, res = len(s), 0
+        dp = [[False] * n for _ in range(n)]
+
+        for i in range(n - 1, -1, -1):
+            for j in range(i, n):
+                if s[i] == s[j] and (j - i <= 2 or dp[i + 1][j - 1]):
+                    dp[i][j] = True
+                    res += 1
+
+        return res
+
+
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        res = 0
+
+        for i in range(len(s)):
+            # odd length
+            l, r = i, i
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                res += 1
+                l -= 1
+                r += 1
+
+            # even length
+            l, r = i, i + 1
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                res += 1
+                l -= 1
+                r += 1
+
+        return res
+
+
+class Solution:
+
+    def countSubstrings(self, s: str) -> int:
+        res = 0
+
+        for i in range(len(s)):
+            res += self.countPali(s, i, i)
+            res += self.countPali(s, i, i + 1)
+        return res
+
+    def countPali(self, s, l, r):
+        res = 0
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            res += 1
+            l -= 1
+            r += 1
+        return res
+
+
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+
+        def manacher(s):
+            t = '#' + '#'.join(s) + '#'
+            n = len(t)
+            p = [0] * n
+            l, r = 0, 0
+            for i in range(n):
+                p[i] = min(r - i, p[l + (r - i)]) if i < r else 0
+                while (i + p[i] + 1 < n and i - p[i] - 1 >= 0
+                       and t[i + p[i] + 1] == t[i - p[i] - 1]):
+                    p[i] += 1
+                if i + p[i] > r:
+                    l, r = i - p[i], i + p[i]
+            return p
+
+        p = manacher(s)
+        res = 0
+        for i in p:
+            res += (i + 1) // 2
+        return res
+
+
+class Solution:
+    def numDecodings(self, s: str) -> int:
+
+        def dfs(i):
+            if i == len(s):
+                return 1
+            if s[i] == '0':
+                return 0
+
+            res = dfs(i + 1)
+            if i < len(s) - 1:
+                if (s[i] == '1' or
+                   (s[i] == '2' and s[i + 1] < '7')):
+                    res += dfs(i + 2)
+
+            return res
+
+        return dfs(0)
+
+
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        dp = {len(s) : 1}
+
+        def dfs(i):
+            if i in dp:
+                return dp[i]
+            if s[i] == "0":
+                return 0
+
+            res = dfs(i + 1)
+            if i + 1 < len(s) and (
+                s[i] == "1" or s[i] == "2" and
+                s[i + 1] in "0123456"
+            ):
+                res += dfs(i + 2)
+            dp[i] = res
+            return res
+
+        return dfs(0)
+
+
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        dp = {len(s): 1}
+        for i in range(len(s) - 1, -1, -1):
+            if s[i] == "0":
+                dp[i] = 0
+            else:
+                dp[i] = dp[i + 1]
+
+            if i + 1 < len(s) and (s[i] == "1" or
+               s[i] == "2" and s[i + 1] in "0123456"
+            ):
+                dp[i] += dp[i + 2]
+        return dp[0]
+
+
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        dp = dp2 = 0
+        dp1 = 1
+        for i in range(len(s) - 1, -1, -1):
+            if s[i] == "0":
+                dp = 0
+            else:
+                dp = dp1
+
+            if i + 1 < len(s) and (s[i] == "1" or
+               s[i] == "2" and s[i + 1] in "0123456"
+            ):
+                dp += dp2
+            dp, dp1, dp2 = 0, dp, dp1
+        return dp1
+
+
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+
+        def dfs(amount):
+            if amount == 0:
+                return 0
+
+            res = 1e9
+            for coin in coins:
+                if amount - coin >= 0:
+                    res = min(res, 1 + dfs(amount - coin))
+            return res
+
+        minCoins = dfs(amount)
+        return -1 if minCoins >= 1e9 else minCoins
+
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        memo = {}
+
+        def dfs(amount):
+            if amount == 0:
+                return 0
+            if amount in memo:
+                return memo[amount]
+
+            res = 1e9
+            for coin in coins:
+                if amount - coin >= 0:
+                    res = min(res, 1 + dfs(amount - coin))
+
+            memo[amount] = res
+            return res
+
+        minCoins = dfs(amount)
+        return -1 if minCoins >= 1e9 else minCoins
+
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        dp = [amount + 1] * (amount + 1)
+        dp[0] = 0
+
+        for a in range(1, amount + 1):
+            for c in coins:
+                if a - c >= 0:
+                    dp[a] = min(dp[a], 1 + dp[a - c])
+        return dp[amount] if dp[amount] != amount + 1 else -1
+
+
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        if amount == 0:
+            return 0
+
+        q = deque([0])
+        seen = [False] * (amount + 1)
+        seen[0] = True
+        res = 0
+
+        while q:
+            res += 1
+            for _ in range(len(q)):
+                cur = q.popleft()
+                for coin in coins:
+                    nxt = cur + coin
+                    if nxt == amount:
+                        return res
+                    if nxt > amount or seen[nxt]:
+                        continue
+                    seen[nxt] = True
+                    q.append(nxt)
+
+        return -1
+
+
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        res = nums[0]
+
+        for i in range(len(nums)):
+            cur = nums[i]
+            res = max(res, cur)
+            for j in range(i + 1, len(nums)):
+                cur *= nums[j]
+                res = max(res, cur)
+
+        return res
+
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        A = []
+        cur = []
+        res = float('-inf')
+
+        for num in nums:
+            res = max(res, num)
+            if num == 0:
+                if cur:
+                    A.append(cur)
+                cur = []
+            else:
+                cur.append(num)
+
+        if cur:
+            A.append(cur)
+
+        for sub in A:
+            negs = sum(1 for i in sub if i < 0)
+            prod = 1
+            need = negs if negs % 2 == 0 else negs - 1
+            negs = 0
+            j = 0
+
+            for i in range(len(sub)):
+                prod *= sub[i]
+                if sub[i] < 0:
+                    negs += 1
+                    while negs > need:
+                        prod //= sub[j]
+                        if sub[j] < 0:
+                            negs -= 1
+                        j += 1
+                if j <= i:
+                    res = max(res, prod)
+
+        return res
+
+
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        res = nums[0]
+        curMin, curMax = 1, 1
+
+        for num in nums:
+            tmp = curMax * num
+            curMax = max(num * curMax, num * curMin, num)
+            curMin = min(tmp, num * curMin, num)
+            res = max(res, curMax)
+        return res
+
+
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        n, res = len(nums), nums[0]
+        prefix = suffix = 0
+
+        for i in range(n):
+            prefix = nums[i] * (prefix or 1)
+            suffix = nums[n - 1 - i] * (suffix or 1)
+            res = max(res, max(prefix, suffix))
+        return res
+
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+
+        def dfs(i):
+            if i == len(s):
+                return True
+
+            for w in wordDict:
+                if ((i + len(w)) <= len(s) and
+                     s[i : i + len(w)] == w
+                ):
+                    if dfs(i + len(w)):
+                        return True
+            return False
+
+        return dfs(0)
+
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        wordSet = set(wordDict)
+
+        def dfs(i):
+            if i == len(s):
+                return True
+
+            for j in range(i, len(s)):
+                if s[i : j + 1] in wordSet:
+                    if dfs(j + 1):
+                        return True
+            return False
+
+        return dfs(0)
+
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        memo = {len(s) : True}
+        def dfs(i):
+            if i in memo:
+                return memo[i]
+
+            for w in wordDict:
+                if ((i + len(w)) <= len(s) and
+                     s[i : i + len(w)] == w
+                ):
+                    if dfs(i + len(w)):
+                        memo[i] = True
+                        return True
+            memo[i] = False
+            return False
+
+        return dfs(0)
+
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        wordSet = set(wordDict)
+        t = 0
+        for w in wordDict:
+            t = max(t, len(w))
+
+        memo = {}
+        def dfs(i):
+            if i in memo:
+                return memo[i]
+            if i == len(s):
+                return True
+            for j in range(i, min(len(s), i + t)):
+                if s[i : j + 1] in wordSet:
+                    if dfs(j + 1):
+                        memo[i] = True
+                        return True
+            memo[i] = False
+            return False
+
+        return dfs(0)
+
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        dp = [False] * (len(s) + 1)
+        dp[len(s)] = True
+
+        for i in range(len(s) - 1, -1, -1):
+            for w in wordDict:
+                if (i + len(w)) <= len(s) and s[i : i + len(w)] == w:
+                    dp[i] = dp[i + len(w)]
+                if dp[i]:
+                    break
+
+        return dp[0]
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_word = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.is_word = True
+
+    def search(self, s, i, j):
+        node = self.root
+        for idx in range(i, j + 1):
+            if s[idx] not in node.children:
+                return False
+            node = node.children[s[idx]]
+        return node.is_word
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        trie = Trie()
+        for word in wordDict:
+            trie.insert(word)
+
+        dp = [False] * (len(s) + 1)
+        dp[len(s)] = True
+
+        t = 0
+        for w in wordDict:
+            t = max(t, len(w))
+
+        for i in range(len(s), -1, -1):
+            for j in range(i, min(len(s), i + t)):
+                if trie.search(s, i, j):
+                    dp[i] = dp[j + 1]
+                    if dp[i]:
+                        break
+
+        return dp[0]
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+
+        def dfs(i, j):
+            if i == len(nums):
+                return 0
+
+            LIS = dfs(i + 1, j) # not include
+
+            if j == -1 or nums[j] < nums[i]:
+                LIS = max(LIS, 1 + dfs(i + 1, i)) # include
+
+            return LIS
+
+        return dfs(0, -1)
+
+
+class Solution:
+    def lengthOfLIS(self, nums):
+        n = len(nums)
+        memo = [[-1] * (n + 1) for _ in range(n)]
+
+        def dfs(i, j):
+            if i == n:
+                return 0
+            if memo[i][j + 1] != -1:
+                return memo[i][j + 1]
+
+            LIS = dfs(i + 1, j)
+
+            if j == -1 or nums[j] < nums[i]:
+                LIS = max(LIS, 1 + dfs(i + 1, i))
+
+            memo[i][j + 1] = LIS
+            return LIS
+
+        return dfs(0, -1)
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        n = len(nums)
+        memo = [-1] * n
+
+        def dfs(i):
+            if memo[i] != -1:
+                return memo[i]
+
+            LIS = 1
+            for j in range(i + 1, n):
+                if nums[i] < nums[j]:
+                    LIS = max(LIS, 1 + dfs(j))
+
+            memo[i] = LIS
+            return LIS
+
+        return max(dfs(i) for i in range(n))
+
+
+class Solution:
+    def lengthOfLIS(self, nums):
+        n = len(nums)
+        dp = [[0] * (n + 1) for _ in range(n + 1)]
+
+        for i in range(n - 1, -1, -1):
+            for j in range(i - 1, -2, -1):
+                LIS = dp[i + 1][j + 1]  # Not including nums[i]
+
+                if j == -1 or nums[j] < nums[i]:
+                    LIS = max(LIS, 1 + dp[i + 1][i + 1])  # Including nums[i]
+
+                dp[i][j + 1] = LIS
+
+        return dp[0][0]
+
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        LIS = [1] * len(nums)
+
+        for i in range(len(nums) - 1, -1, -1):
+            for j in range(i + 1, len(nums)):
+                if nums[i] < nums[j]:
+                    LIS[i] = max(LIS[i], 1 + LIS[j])
+        return max(LIS)
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+from bisect import bisect_left
+class SegmentTree:
+    def __init__(self, N):
+        self.n = N
+        while (self.n & (self.n - 1)) != 0:
+            self.n += 1
+        self.tree = [0] * (2 * self.n)
+
+    def update(self, i, val):
+        self.tree[self.n + i] = val
+        j = (self.n + i) >> 1
+        while j >= 1:
+            self.tree[j] = max(self.tree[j << 1], self.tree[j << 1 | 1])
+            j >>= 1
+
+    def query(self, l, r):
+        if l > r:
+            return 0
+        res = float('-inf')
+        l += self.n
+        r += self.n + 1
+        while l < r:
+            if l & 1:
+                res = max(res, self.tree[l])
+                l += 1
+            if r & 1:
+                r -= 1
+                res = max(res, self.tree[r])
+            l >>= 1
+            r >>= 1
+        return res
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        def compress(arr):
+            sortedArr = sorted(set(arr))
+            order = []
+            for num in arr:
+                order.append(bisect_left(sortedArr, num))
+            return order
+
+        nums = compress(nums)
+        n = len(nums)
+        segTree = SegmentTree(n)
+
+        LIS = 0
+        for num in nums:
+            curLIS = segTree.query(0, num - 1) + 1
+            segTree.update(num, curLIS)
+            LIS = max(LIS, curLIS)
+        return LIS
+
+
+
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        if sum(nums) % 2:
+            return False
+
+        def dfs(i, target):
+            if i >= len(nums):
+                return target == 0
+            if target < 0:
+                return False
+
+            return dfs(i + 1, target) or dfs(i + 1, target - nums[i])
+
+        return dfs(0, sum(nums) // 2)
+
+
+
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        total = sum(nums)
+        if total % 2 != 0:
+            return False
+
+        target = total // 2
+        n = len(nums)
+        memo = [[-1] * (target + 1) for _ in range(n + 1)]
+
+        def dfs(i, target):
+            if target == 0:
+                return True
+            if i >= n or target < 0:
+                return False
+            if memo[i][target] != -1:
+                return memo[i][target]
+
+            memo[i][target] = (dfs(i + 1, target) or
+                               dfs(i + 1, target - nums[i]))
+            return memo[i][target]
+
+        return dfs(0, target)
+
+
+
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        if sum(nums) % 2:
+            return False
+
+        target = sum(nums) // 2
+        dp = [False] * (target + 1)
+        nextDp = [False] * (target + 1)
+
+        dp[0] = True
+        for i in range(len(nums)):
+            for j in range(1, target + 1):
+                if j >= nums[i]:
+                    nextDp[j] = dp[j] or dp[j - nums[i]]
+                else:
+                    nextDp[j] = dp[j]
+            dp, nextDp = nextDp, dp
+
+        return dp[target]
+
+
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        if sum(nums) % 2:
+            return False
+
+        dp = set()
+        dp.add(0)
+        target = sum(nums) // 2
+
+        for i in range(len(nums) - 1, -1, -1):
+            nextDP = set()
+            for t in dp:
+                if (t + nums[i]) == target:
+                    return True
+                nextDP.add(t + nums[i])
+                nextDP.add(t)
+            dp = nextDP
+        return False
+
+
+class Solution:
+    def canPartition(self, nums: list[int]) -> bool:
+        if sum(nums) % 2:
+            return False
+
+        target = sum(nums) // 2
+        dp = [False] * (target + 1)
+
+        dp[0] = True
+        for num in nums:
+            for j in range(target, num - 1, -1):
+                dp[j] = dp[j] or dp[j - num]
+
+        return dp[target]
+
+
+class Solution:
+    def canPartition(self, nums: list[int]) -> bool:
+        total = sum(nums)
+        if total % 2 != 0:
+            return False
+
+        target = total // 2
+        dp = 1 << 0
+
+        for num in nums:
+            dp |= dp << num
+
+        return (dp & (1 << target)) != 0
+
+

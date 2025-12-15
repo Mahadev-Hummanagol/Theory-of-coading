@@ -1,0 +1,784 @@
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        subset = []
+
+        def dfs(i):
+            if i >= len(nums):
+                res.append(subset.copy())
+                return
+            subset.append(nums[i])
+            dfs(i + 1)
+            subset.pop()
+            dfs(i + 1)
+
+        dfs(0)
+        return res
+
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+
+        for num in nums:
+            res += [subset + [num] for subset in res]
+
+        return res
+
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)
+        res = []
+        for i in range(1 << n):
+            subset = [nums[j] for j in range(n) if (i & (1 << j))]
+            res.append(subset)
+        return res
+
+
+class Solution:
+    def combinationSum(self, nums: List[int], target: int) -> List[List[int]]:
+        res = []
+
+        def dfs(i, cur, total):
+            if total == target:
+                res.append(cur.copy())
+                return
+            if i >= len(nums) or total > target:
+                return
+
+            cur.append(nums[i])
+            dfs(i, cur, total + nums[i])
+            cur.pop()
+            dfs(i + 1, cur, total)
+
+        dfs(0, [], 0)
+        return res
+
+
+class Solution:
+    def combinationSum(self, nums: List[int], target: int) -> List[List[int]]:
+        res = []
+        nums.sort()
+
+        def dfs(i, cur, total):
+            if total == target:
+                res.append(cur.copy())
+                return
+
+            for j in range(i, len(nums)):
+                if total + nums[j] > target:
+                    return
+                cur.append(nums[j])
+                dfs(j, cur, total + nums[j])
+                cur.pop()
+
+        dfs(0, [], 0)
+        return res
+
+class Solution:
+    def combinationSum2(self, candidates, target):
+        res = set()
+        candidates.sort()
+
+        def generate_subsets(i, cur, total):
+            if total == target:
+                res.add(tuple(cur))
+                return
+            if total > target or i == len(candidates):
+                return
+
+            cur.append(candidates[i])
+            generate_subsets(i + 1, cur, total + candidates[i])
+            cur.pop()
+
+            generate_subsets(i + 1, cur, total)
+
+        generate_subsets(0, [], 0)
+        return [list(combination) for combination in res]
+
+
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        res = []
+        candidates.sort()
+
+        def dfs(i, cur, total):
+            if total == target:
+                res.append(cur.copy())
+                return
+            if total > target or i == len(candidates):
+                return
+
+            cur.append(candidates[i])
+            dfs(i + 1, cur, total + candidates[i])
+            cur.pop()
+
+
+            while i + 1 < len(candidates) and candidates[i] == candidates[i+1]:
+                i += 1
+            dfs(i + 1, cur, total)
+
+        dfs(0, [], 0)
+        return res
+
+
+class Solution:
+    def combinationSum2(self, nums, target):
+        self.res = []
+        self.count = defaultdict(int)
+        cur = []
+        A = []
+
+        for num in nums:
+            if self.count[num] == 0:
+                A.append(num)
+            self.count[num] += 1
+        self.backtrack(A, target, cur, 0)
+        return self.res
+
+    def backtrack(self, nums, target, cur, i):
+        if target == 0:
+            self.res.append(cur.copy())
+            return
+        if target < 0 or i >= len(nums):
+            return
+
+        if self.count[nums[i]] > 0:
+            cur.append(nums[i])
+            self.count[nums[i]] -= 1
+            self.backtrack(nums, target - nums[i], cur, i)
+            self.count[nums[i]] += 1
+            cur.pop()
+
+        self.backtrack(nums, target, cur, i + 1)
+
+
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        res = []
+        candidates.sort()
+
+        def dfs(idx, path, cur):
+            if cur == target:
+                res.append(path.copy())
+                return
+            for i in range(idx, len(candidates)):
+                if i > idx and candidates[i] == candidates[i - 1]:
+                    continue
+                if cur + candidates[i] > target:
+                    break
+
+                path.append(candidates[i])
+                dfs(i + 1, path, cur + candidates[i])
+                path.pop()
+
+        dfs(0, [], 0)
+        return res
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        if len(nums) == 0:
+            return [[]]
+
+        perms = self.permute(nums[1:])
+        res = []
+        for p in perms:
+            for i in range(len(p) + 1):
+                p_copy = p.copy()
+                p_copy.insert(i, nums[0])
+                res.append(p_copy)
+        return res
+
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        perms = [[]]
+        for num in nums:
+            new_perms = []
+            for p in perms:
+                for i in range(len(p) + 1):
+                    p_copy = p.copy()
+                    p_copy.insert(i, num)
+                    new_perms.append(p_copy)
+            perms = new_perms
+        return perms
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        self.res = []
+        self.backtrack([], nums, [False] * len(nums))
+        return self.res
+
+    def backtrack(self, perm: List[int], nums: List[int], pick: List[bool]):
+        if len(perm) == len(nums):
+            self.res.append(perm[:])
+            return
+        for i in range(len(nums)):
+            if not pick[i]:
+                perm.append(nums[i])
+                pick[i] = True
+                self.backtrack(perm, nums, pick)
+                perm.pop()
+                pick[i] = False
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        self.res = []
+        self.backtrack([], nums, 0)
+        return self.res
+
+    def backtrack(self, perm: List[int], nums: List[int], mask: int):
+        if len(perm) == len(nums):
+            self.res.append(perm[:])
+            return
+        for i in range(len(nums)):
+            if not (mask & (1 << i)):
+                perm.append(nums[i])
+                self.backtrack(perm, nums, mask | (1 << i))
+                perm.pop()
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        self.res = []
+        self.backtrack(nums, 0)
+        return self.res
+
+    def backtrack(self, nums: List[int], idx: int):
+        if idx == len(nums):
+            self.res.append(nums[:])
+            return
+        for i in range(idx, len(nums)):
+            nums[idx], nums[i] = nums[i], nums[idx]
+            self.backtrack(nums, idx + 1)
+            nums[idx], nums[i] = nums[i], nums[idx]
+
+
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        res = set()
+
+        def backtrack(i, subset):
+            if i == len(nums):
+                res.add(tuple(subset))
+                return
+
+            subset.append(nums[i])
+            backtrack(i + 1, subset)
+            subset.pop()
+            backtrack(i + 1, subset)
+
+        nums.sort()
+        backtrack(0, [])
+        return [list(s) for s in res]
+
+
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        nums.sort()
+
+        def backtrack(i, subset):
+            if i == len(nums):
+                res.append(subset[::])
+                return
+
+            subset.append(nums[i])
+            backtrack(i + 1, subset)
+            subset.pop()
+
+            while i + 1 < len(nums) and nums[i] == nums[i + 1]:
+                i += 1
+            backtrack(i + 1, subset)
+
+        backtrack(0, [])
+        return res
+
+
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        res = []
+        def backtrack(i, subset):
+            res.append(subset[::])
+
+            for j in range(i, len(nums)):
+                if j > i and nums[j] == nums[j - 1]:
+                    continue
+                subset.append(nums[j])
+                backtrack(j + 1, subset)
+                subset.pop()
+
+        backtrack(0, [])
+        return res
+
+
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        res = [[]]
+        prev_Idx = idx = 0
+
+        for i in range(len(nums)):
+            idx = prev_idx if i >= 1 and nums[i] == nums[i - 1] else 0
+            prev_idx = len(res)
+            for j in range(idx, prev_idx):
+                tmp = res[j].copy()
+                tmp.append(nums[i])
+                res.append(tmp)
+
+        return res
+
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
+
+        def valid(s: str):
+            open = 0
+            for c in s:
+                open += 1 if c == '(' else -1
+                if open < 0:
+                    return False
+            return not open
+
+        def dfs(s: str):
+            if n * 2 == len(s):
+                if valid(s):
+                    res.append(s)
+                return
+
+            dfs(s + '(')
+            dfs(s + ')')
+
+        dfs("")
+        return res
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        stack = []
+        res = []
+
+        def backtrack(openN, closedN):
+            if openN == closedN == n:
+                res.append("".join(stack))
+                return
+
+            if openN < n:
+                stack.append("(")
+                backtrack(openN + 1, closedN)
+                stack.pop()
+            if closedN < openN:
+                stack.append(")")
+                backtrack(openN, closedN + 1)
+                stack.pop()
+
+        backtrack(0, 0)
+        return res
+
+
+class Solution:
+    def generateParenthesis(self, n):
+        res = [[] for _ in range(n+1)]
+        res[0] = [""]
+
+        for k in range(n + 1):
+            for i in range(k):
+                for left in res[i]:
+                    for right in res[k-i-1]:
+                        res[k].append("(" + left + ")" + right)
+
+        return res[-1]
+
+
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        ROWS, COLS = len(board), len(board[0])
+        path = set()
+
+        def dfs(r, c, i):
+            if i == len(word):
+                return True
+
+            if (min(r, c) < 0 or
+                r >= ROWS or c >= COLS or
+                word[i] != board[r][c] or
+                (r, c) in path):
+                return False
+
+            path.add((r, c))
+            res = (dfs(r + 1, c, i + 1) or
+                   dfs(r - 1, c, i + 1) or
+                   dfs(r, c + 1, i + 1) or
+                   dfs(r, c - 1, i + 1))
+            path.remove((r, c))
+            return res
+
+        for r in range(ROWS):
+            for c in range(COLS):
+                if dfs(r, c, 0):
+                    return True
+        return False
+
+
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        ROWS, COLS = len(board), len(board[0])
+        visited = [[False for _ in range(COLS)] for _ in range(ROWS)]
+
+        def dfs(r, c, i):
+            if i == len(word):
+                return True
+            if (r < 0 or c < 0 or r >= ROWS or c >= COLS or
+                word[i] != board[r][c] or visited[r][c]):
+                return False
+
+            visited[r][c] = True
+            res = (dfs(r + 1, c, i + 1) or
+                   dfs(r - 1, c, i + 1) or
+                   dfs(r, c + 1, i + 1) or
+                   dfs(r, c - 1, i + 1))
+            visited[r][c] = False
+            return res
+
+        for r in range(ROWS):
+            for c in range(COLS):
+                if dfs(r, c, 0):
+                    return True
+        return False
+
+
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        ROWS, COLS = len(board), len(board[0])
+
+        def dfs(r, c, i):
+            if i == len(word):
+                return True
+            if (r < 0 or c < 0 or r >= ROWS or c >= COLS or
+                word[i] != board[r][c] or board[r][c] == '#'):
+                return False
+
+            board[r][c] = '#'
+            res = (dfs(r + 1, c, i + 1) or
+                   dfs(r - 1, c, i + 1) or
+                   dfs(r, c + 1, i + 1) or
+                   dfs(r, c - 1, i + 1))
+            board[r][c] = word[i]
+            return res
+
+        for r in range(ROWS):
+            for c in range(COLS):
+                if dfs(r, c, 0):
+                    return True
+        return False
+
+
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        res, part = [], []
+
+        def dfs(j, i):
+            if i >= len(s):
+                if i == j:
+                    res.append(part.copy())
+                return
+
+            if self.isPali(s, j, i):
+                part.append(s[j : i + 1])
+                dfs(i + 1, i + 1)
+                part.pop()
+
+            dfs(j, i + 1)
+
+        dfs(0, 0)
+        return res
+
+    def isPali(self, s, l, r):
+        while l < r:
+            if s[l] != s[r]:
+                return False
+            l, r = l + 1, r - 1
+        return True
+
+
+class Solution:
+
+    def partition(self, s: str) -> List[List[str]]:
+        res, part = [], []
+
+        def dfs(i):
+            if i >= len(s):
+                res.append(part.copy())
+                return
+            for j in range(i, len(s)):
+                if self.isPali(s, i, j):
+                    part.append(s[i : j + 1])
+                    dfs(j + 1)
+                    part.pop()
+
+        dfs(0)
+        return res
+
+    def isPali(self, s, l, r):
+        while l < r:
+            if s[l] != s[r]:
+                return False
+            l, r = l + 1, r - 1
+        return True
+
+
+class Solution:
+
+    def partition(self, s: str) -> List[List[str]]:
+        n = len(s)
+        dp = [[False] * n for _ in range(n)]
+        for l in range(1, n + 1):
+            for i in range(n - l + 1):
+                dp[i][i + l - 1] = (s[i] == s[i + l - 1] and
+                                    (i + 1 > (i + l - 2) or
+                                    dp[i + 1][i + l - 2]))
+
+        res, part = [], []
+        def dfs(i):
+            if i >= len(s):
+                res.append(part.copy())
+                return
+            for j in range(i, len(s)):
+                if dp[i][j]:
+                    part.append(s[i : j + 1])
+                    dfs(j + 1)
+                    part.pop()
+
+        dfs(0)
+        return res
+
+
+class Solution:
+
+    def partition(self, s: str) -> List[List[str]]:
+        n = len(s)
+        dp = [[False] * n for _ in range(n)]
+        for l in range(1, n + 1):
+            for i in range(n - l + 1):
+                dp[i][i + l - 1] = (s[i] == s[i + l - 1] and
+                                    (i + 1 > (i + l - 2) or
+                                    dp[i + 1][i + l - 2]))
+
+        def dfs(i):
+            if i >= n:
+                return [[]]
+
+            ret = []
+            for j in range(i, n):
+                if dp[i][j]:
+                    nxt = dfs(j + 1)
+                    for part in nxt:
+                        cur = [s[i : j + 1]] + part
+                        ret.append(cur)
+            return ret
+
+        return dfs(0)
+
+
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        res = []
+        digitToChar = {
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "qprs",
+            "8": "tuv",
+            "9": "wxyz",
+        }
+
+        def backtrack(i, curStr):
+            if len(curStr) == len(digits):
+                res.append(curStr)
+                return
+            for c in digitToChar[digits[i]]:
+                backtrack(i + 1, curStr + c)
+
+        if digits:
+            backtrack(0, "")
+
+        return res
+
+
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        if not digits:
+            return []
+
+        res = [""]
+        digitToChar = {
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "qprs",
+            "8": "tuv",
+            "9": "wxyz",
+        }
+
+        for digit in digits:
+            tmp = []
+            for curStr in res:
+                for c in digitToChar[digit]:
+                    tmp.append(curStr + c)
+            res = tmp
+        return res
+
+
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        res = []
+        board = [["."] * n for i in range(n)]
+
+        def backtrack(r):
+            if r == n:
+                copy = ["".join(row) for row in board]
+                res.append(copy)
+                return
+            for c in range(n):
+                if self.isSafe(r, c, board):
+                    board[r][c] = "Q"
+                    backtrack(r + 1)
+                    board[r][c] = "."
+
+        backtrack(0)
+        return res
+
+    def isSafe(self, r: int, c: int, board):
+        row = r - 1
+        while row >= 0:
+            if board[row][c] == "Q":
+                return False
+            row -= 1
+
+        row, col = r - 1, c - 1
+        while row >= 0 and col >= 0:
+            if board[row][col] == "Q":
+                return False
+            row -= 1
+            col -= 1
+
+        row, col = r - 1, c + 1
+        while row >= 0 and col < len(board):
+            if board[row][col] == "Q":
+                return False
+            row -= 1
+            col += 1
+        return True
+
+
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        col = set()
+        posDiag = set()
+        negDiag = set()
+
+        res = []
+        board = [["."] * n for i in range(n)]
+
+        def backtrack(r):
+            if r == n:
+                copy = ["".join(row) for row in board]
+                res.append(copy)
+                return
+
+            for c in range(n):
+                if c in col or (r + c) in posDiag or (r - c) in negDiag:
+                    continue
+
+                col.add(c)
+                posDiag.add(r + c)
+                negDiag.add(r - c)
+                board[r][c] = "Q"
+
+                backtrack(r + 1)
+
+                col.remove(c)
+                posDiag.remove(r + c)
+                negDiag.remove(r - c)
+                board[r][c] = "."
+
+        backtrack(0)
+        return res
+
+
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        col = [False] * n
+        posDiag = [False] * (n * 2)
+        negDiag = [False] * (n * 2)
+        res = []
+        board = [["."] * n for i in range(n)]
+
+        def backtrack(r):
+            if r == n:
+                copy = ["".join(row) for row in board]
+                res.append(copy)
+                return
+            for c in range(n):
+                if col[c] or posDiag[r + c] or negDiag[r - c + n]:
+                    continue
+                col[c] = True
+                posDiag[r + c] = True
+                negDiag[r - c + n] = True
+                board[r][c] = "Q"
+
+                backtrack(r + 1)
+
+                col[c] = False
+                posDiag[r + c] = False
+                negDiag[r - c + n] = False
+                board[r][c] = "."
+
+        backtrack(0)
+        return res
+
+
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        col = 0
+        posDiag = 0
+        negDiag = 0
+        res = []
+        board = [["."] * n for i in range(n)]
+
+        def backtrack(r):
+            nonlocal col, posDiag, negDiag
+            if r == n:
+                copy = ["".join(row) for row in board]
+                res.append(copy)
+                return
+            for c in range(n):
+                if ((col & (1 << c)) or (posDiag & (1 << (r + c)))
+                    or (negDiag & (1 << (r - c + n)))):
+                    continue
+                col ^= (1 << c)
+                posDiag ^= (1 << (r + c))
+                negDiag ^= (1 << (r - c + n))
+                board[r][c] = "Q"
+
+                backtrack(r + 1)
+
+                col ^= (1 << c)
+                posDiag ^= (1 << (r + c))
+                negDiag ^= (1 << (r - c + n))
+                board[r][c] = "."
+
+        backtrack(0)
+        return res
+
+

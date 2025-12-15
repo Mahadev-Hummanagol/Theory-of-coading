@@ -1,0 +1,968 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head:
+            return None
+
+        newHead = head
+        if head.next:
+            newHead = self.reverseList(head.next)
+            head.next.next = head
+        head.next = None
+
+        return newHead
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reverseList(self, head: ListNode) -> ListNode:
+        prev, curr = None, head
+
+        while curr:
+            temp = curr.next
+            curr.next = prev
+            prev = curr
+            curr = temp
+        return prev
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        if list1 is None:
+            return list2
+        if list2 is None:
+            return list1
+        if list1.val <= list2.val:
+            list1.next = self.mergeTwoLists(list1.next, list2)
+            return list1
+        else:
+            list2.next = self.mergeTwoLists(list1, list2.next)
+            return list2
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def mergeTwoLists(self, list1: ListNode, list2: ListNode) -> ListNode:
+        dummy = node = ListNode()
+
+        while list1 and list2:
+            if list1.val < list2.val:
+                node.next = list1
+                list1 = list1.next
+            else:
+                node.next = list2
+                list2 = list2.next
+            node = node.next
+
+        node.next = list1 or list2
+
+        return dummy.next
+
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        seen = set()
+        cur = head
+        while cur:
+            if cur in seen:
+                return True
+            seen.add(cur)
+            cur = cur.next
+        return False
+
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        slow, fast = head, head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+        return False
+
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        if not head:
+            return
+
+        nodes = []
+        cur = head
+        while cur:
+            nodes.append(cur)
+            cur = cur.next
+
+        i, j = 0, len(nodes) - 1
+        while i < j:
+            nodes[i].next = nodes[j]
+            i += 1
+            if i >= j:
+                break
+            nodes[j].next = nodes[i]
+            j -= 1
+
+        nodes[i].next = None
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+
+        def rec(root: ListNode, cur: ListNode) -> ListNode:
+            if not cur:
+                return root
+
+            root = rec(root, cur.next)
+            if not root:
+                return None
+
+            tmp = None
+            if root == cur or root.next == cur:
+                cur.next = None
+            else:
+                tmp = root.next
+                root.next = cur
+                cur.next = tmp
+
+            return tmp
+
+        head = rec(head, head.next)
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        slow, fast = head, head.next
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        second = slow.next
+        prev = slow.next = None
+        while second:
+            tmp = second.next
+            second.next = prev
+            prev = second
+            second = tmp
+
+        first, second = head, prev
+        while second:
+            tmp1, tmp2 = first.next, second.next
+            first.next = second
+            second.next = tmp1
+            first, second = tmp1, tmp2
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        nodes = []
+        cur = head
+        while cur:
+            nodes.append(cur)
+            cur = cur.next
+
+        removeIndex = len(nodes) - n
+        if removeIndex == 0:
+            return head.next
+
+        nodes[removeIndex - 1].next = nodes[removeIndex].next
+        return head
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        N = 0
+        cur = head
+        while cur:
+            N += 1
+            cur = cur.next
+
+        removeIndex = N - n
+        if removeIndex == 0:
+            return head.next
+
+        cur = head
+        for i in range(N - 1):
+            if (i + 1) == removeIndex:
+                cur.next = cur.next.next
+                break
+            cur = cur.next
+        return head
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def rec(self, head, n):
+        if not head:
+            return None
+
+        head.next = self.rec(head.next, n)
+        n[0] -= 1
+        if n[0] == 0:
+            return head.next
+        return head
+
+    def removeNthFromEnd(self, head, n):
+        return self.rec(head, [n])
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        dummy = ListNode(0, head)
+        left = dummy
+        right = head
+
+        while n > 0:
+            right = right.next
+            n -= 1
+
+        while right:
+            left = left.next
+            right = right.next
+
+        left.next = left.next.next
+        return dummy.next
+
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+"""
+
+class Solution:
+    def __init__(self):
+        self.map = {}
+
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        if head is None:
+            return None
+        if head in self.map:
+            return self.map[head]
+
+        copy = Node(head.val)
+        self.map[head] = copy
+        copy.next = self.copyRandomList(head.next)
+        copy.random = self.map.get(head.random)
+        return copy
+
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+"""
+
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        oldToCopy = {None: None}
+
+        cur = head
+        while cur:
+            copy = Node(cur.val)
+            oldToCopy[cur] = copy
+            cur = cur.next
+        cur = head
+        while cur:
+            copy = oldToCopy[cur]
+            copy.next = oldToCopy[cur.next]
+            copy.random = oldToCopy[cur.random]
+            cur = cur.next
+        return oldToCopy[head]
+
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+"""
+
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        oldToCopy = collections.defaultdict(lambda: Node(0))
+        oldToCopy[None] = None
+
+        cur = head
+        while cur:
+            oldToCopy[cur].val = cur.val
+            oldToCopy[cur].next = oldToCopy[cur.next]
+            oldToCopy[cur].random = oldToCopy[cur.random]
+            cur = cur.next
+        return oldToCopy[head]
+
+
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+"""
+
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        if head is None:
+            return None
+
+        l1 = head
+        while l1 is not None:
+            l2 = Node(l1.val)
+            l2.next = l1.next
+            l1.next = l2
+            l1 = l2.next
+
+        newHead = head.next
+
+        l1 = head
+        while l1 is not None:
+            if l1.random is not None:
+                l1.next.random = l1.random.next
+            l1 = l1.next.next
+
+        l1 = head
+        while l1 is not None:
+            l2 = l1.next
+            l1.next = l2.next
+            if l2.next is not None:
+                l2.next = l2.next.next
+            l1 = l1.next
+
+        return newHead
+
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+"""
+
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        if head is None:
+            return None
+
+        l1 = head
+        while l1:
+            l2 = Node(l1.val)
+            l2.next = l1.random
+            l1.random = l2
+            l1 = l1.next
+
+        newHead = head.random
+
+        l1 = head
+        while l1:
+            l2 = l1.random
+            l2.random = l2.next.random if l2.next else None
+            l1 = l1.next
+
+        l1 = head
+        while l1 is not None:
+            l2 = l1.random
+            l1.random = l2.next
+            l2.next = l1.next.random if l1.next else None
+            l1 = l1.next
+
+        return newHead
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def add(self, l1: Optional[ListNode], l2: Optional[ListNode], carry: int) -> Optional[ListNode]:
+        if not l1 and not l2 and carry == 0:
+            return None
+
+        v1 = l1.val if l1 else 0
+        v2 = l2.val if l2 else 0
+
+        carry, val = divmod(v1 + v2 + carry, 10)
+
+        next_node = self.add(
+            l1.next if l1 else None,
+            l2.next if l2 else None,
+            carry
+        )
+        return ListNode(val, next_node)
+
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        return self.add(l1, l2, 0)
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode()
+        cur = dummy
+
+        carry = 0
+        while l1 or l2 or carry:
+            v1 = l1.val if l1 else 0
+            v2 = l2.val if l2 else 0
+
+            # new digit
+            val = v1 + v2 + carry
+            carry = val // 10
+            val = val % 10
+            cur.next = ListNode(val)
+
+            # update ptrs
+            cur = cur.next
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
+
+        return dummy.next
+
+
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        nums.sort()
+        for i in range(len(nums) - 1):
+            if nums[i] == nums[i + 1]:
+                return nums[i]
+        return -1
+
+
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        seen = set()
+        for num in nums:
+            if num in seen:
+                return num
+            seen.add(num)
+        return -1
+
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        seen = [0] * len(nums)
+        for num in nums:
+            if seen[num - 1]:
+                return num
+            seen[num - 1] = 1
+        return -1
+
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        for num in nums :
+            idx = abs(num) - 1
+            if nums[idx] < 0 :
+                return abs(num)
+            nums[idx] *= -1
+        return -1
+
+
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        n = len(nums)
+        low, high = 1, n - 1
+        while low < high:
+            mid = low + (high - low) // 2
+            lessOrEqual = sum(1 for num in nums if num <= mid)
+
+            if lessOrEqual <= mid:
+                low = mid + 1
+            else:
+                high = mid
+
+        return low
+
+
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        n = len(nums)
+        res = 0
+        for b in range(32):
+            x = y = 0
+            mask = 1 << b
+            for num in nums:
+                if num & mask:
+                    x += 1
+
+            for num in range(1, n):
+                if num & mask:
+                    y += 1
+
+            if x > y:
+                res |= mask
+        return res
+
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        slow, fast = 0, 0
+        while True:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+            if slow == fast:
+                break
+
+        slow2 = 0
+        while True:
+            slow = nums[slow]
+            slow2 = nums[slow2]
+            if slow == slow2:
+                return slow
+
+
+class LRUCache:
+
+    def __init__(self, capacity: int):
+        self.cache = []
+        self.capacity = capacity
+
+    def get(self, key: int) -> int:
+        for i in range(len(self.cache)):
+            if self.cache[i][0] == key:
+                tmp = self.cache.pop(i)
+                self.cache.append(tmp)
+                return tmp[1]
+        return -1
+
+    def put(self, key: int, value: int) -> None:
+        for i in range(len(self.cache)):
+            if self.cache[i][0] == key:
+                tmp = self.cache.pop(i)
+                tmp[1] = value
+                self.cache.append(tmp)
+                return
+
+        if self.capacity == len(self.cache):
+            self.cache.pop(0)
+
+        self.cache.append([key, value])
+
+
+class Node:
+    def __init__(self, key, val):
+        self.key, self.val = key, val
+        self.prev = self.next = None
+
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.cap = capacity
+        self.cache = {}  # map key to node
+
+        self.left, self.right = Node(0, 0), Node(0, 0)
+        self.left.next, self.right.prev = self.right, self.left
+
+    def remove(self, node):
+        prev, nxt = node.prev, node.next
+        prev.next, nxt.prev = nxt, prev
+
+    def insert(self, node):
+        prev, nxt = self.right.prev, self.right
+        prev.next = nxt.prev = node
+        node.next, node.prev = nxt, prev
+
+    def get(self, key: int) -> int:
+        if key in self.cache:
+            self.remove(self.cache[key])
+            self.insert(self.cache[key])
+            return self.cache[key].val
+        return -1
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            self.remove(self.cache[key])
+        self.cache[key] = Node(key, value)
+        self.insert(self.cache[key])
+
+        if len(self.cache) > self.cap:
+            lru = self.left.next
+            self.remove(lru)
+            del self.cache[lru.key]
+
+
+
+class LRUCache:
+
+    def __init__(self, capacity: int):
+        self.cache = OrderedDict()
+        self.cap = capacity
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        self.cache.move_to_end(key)
+        return self.cache[key]
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            self.cache.move_to_end(key)
+        self.cache[key] = value
+
+        if len(self.cache) > self.cap:
+            self.cache.popitem(last=False)
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        nodes = []
+        for lst in lists:
+            while lst:
+                nodes.append(lst.val)
+                lst = lst.next
+        nodes.sort()
+
+        res = ListNode(0)
+        cur = res
+        for node in nodes:
+            cur.next = ListNode(node)
+            cur = cur.next
+        return res.next
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        res = ListNode(0)
+        cur = res
+
+        while True:
+            minNode = -1
+            for i in range(len(lists)):
+                if not lists[i]:
+                    continue
+                if minNode == -1 or lists[minNode].val > lists[i].val:
+                    minNode = i
+
+            if minNode == -1:
+                break
+            cur.next = lists[minNode]
+            lists[minNode] = lists[minNode].next
+            cur = cur.next
+
+        return res.next
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        if len(lists) == 0:
+            return None
+
+        for i in range(1, len(lists)):
+            lists[i] = self.mergeList(lists[i - 1], lists[i])
+
+        return lists[-1]
+
+    def mergeList(self, l1, l2):
+        dummy = ListNode()
+        tail = dummy
+
+        while l1 and l2:
+            if l1.val < l2.val:
+                tail.next = l1
+                l1 = l1.next
+            else:
+                tail.next = l2
+                l2 = l2.next
+            tail = tail.next
+        if l1:
+            tail.next = l1
+        if l2:
+            tail.next = l2
+        return dummy.next
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class NodeWrapper:
+    def __init__(self, node):
+        self.node = node
+
+    def __lt__(self, other):
+        return self.node.val < other.node.val
+
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        if len(lists) == 0:
+            return None
+
+        res = ListNode(0)
+        cur = res
+        minHeap = []
+
+        for lst in lists:
+            if lst is not None:
+                heapq.heappush(minHeap, NodeWrapper(lst))
+
+        while minHeap:
+            node_wrapper = heapq.heappop(minHeap)
+            cur.next = node_wrapper.node
+            cur = cur.next
+
+            if node_wrapper.node.next:
+                heapq.heappush(minHeap, NodeWrapper(node_wrapper.node.next))
+
+        return res.next
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def mergeKLists(self, lists):
+        if not lists or len(lists) == 0:
+            return None
+        return self.divide(lists, 0, len(lists) - 1)
+
+    def divide(self, lists, l, r):
+        if l > r:
+            return None
+        if l == r:
+            return lists[l]
+
+        mid = l + (r - l) // 2
+        left = self.divide(lists, l, mid)
+        right = self.divide(lists, mid + 1, r)
+
+        return self.conquer(left, right)
+
+    def conquer(self, l1, l2):
+        dummy = ListNode(0)
+        curr = dummy
+
+        while l1 and l2:
+            if l1.val <= l2.val:
+                curr.next = l1
+                l1 = l1.next
+            else:
+                curr.next = l2
+                l2 = l2.next
+            curr = curr.next
+
+        if l1:
+            curr.next = l1
+        else:
+            curr.next = l2
+
+        return dummy.next
+
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        if not lists or len(lists) == 0:
+            return None
+
+        while len(lists) > 1:
+            mergedLists = []
+            for i in range(0, len(lists), 2):
+                l1 = lists[i]
+                l2 = lists[i + 1] if (i + 1) < len(lists) else None
+                mergedLists.append(self.mergeList(l1, l2))
+            lists = mergedLists
+        return lists[0]
+
+    def mergeList(self, l1, l2):
+        dummy = ListNode()
+        tail = dummy
+
+        while l1 and l2:
+            if l1.val < l2.val:
+                tail.next = l1
+                l1 = l1.next
+            else:
+                tail.next = l2
+                l2 = l2.next
+            tail = tail.next
+
+        if l1:
+            tail.next = l1
+        if l2:
+            tail.next = l2
+
+        return dummy.next
+
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        cur = head
+        group = 0
+        while cur and group < k:
+            cur = cur.next
+            group += 1
+
+        if group == k:
+            cur = self.reverseKGroup(cur, k)
+            while group > 0:
+                tmp = head.next
+                head.next = cur
+                cur = head
+                head = tmp
+                group -= 1
+            head = cur
+        return head
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        dummy = ListNode(0, head)
+        groupPrev = dummy
+
+        while True:
+            kth = self.getKth(groupPrev, k)
+            if not kth:
+                break
+            groupNext = kth.next
+
+            prev, curr = kth.next, groupPrev.next
+            while curr != groupNext:
+                tmp = curr.next
+                curr.next = prev
+                prev = curr
+                curr = tmp
+
+            tmp = groupPrev.next
+            groupPrev.next = kth
+            groupPrev = tmp
+        return dummy.next
+
+    def getKth(self, curr, k):
+        while curr and k > 0:
+            curr = curr.next
+            k -= 1
+        return curr
+
+

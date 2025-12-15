@@ -1,0 +1,122 @@
+Job description
+At FourKites we have the opportunity to tackle complex challenges with real-world impacts. Whether its medical supplies from Cardinal Health or groceries for Walmart, the FourKites platform helps customers operate global supply chains that are efficient, agile and sustainable.
+
+Join a team of curious problem solvers that celebrates differences, leads with empathy and values inclusivity.
+
+
+We are seeking an experienced Senior Engineering Manager to lead our AI/ML engineering teams in building cutting-edge artificial intelligence solutions. This role requires a unique blend of technical expertise in AI/ML, proven engineering leadership, and strategic thinking to drive innovation at scale.
+
+
+Key Responsibilities
+
+Technical Leadership
+
+Define and execute the technical strategy for AI/ML initiatives across multiple product areas
+Oversee the design and architecture of scalable ML systems, from data pipelines to model deployment
+Drive decisions on technology stack, frameworks, and infrastructure for AI/ML workloads
+Ensure engineering excellence through code reviews, design reviews, and technical mentorship
+Stay current with AI/ML research and industry trends to inform strategic decisions
+People Management
+
+Lead, mentor, and grow a team of 15+ AI engineers, data scientists, and software engineers
+Build high-performing teams through hiring, performance management, and career development
+Foster a culture of innovation, collaboration, and continuous learning
+Conduct regular 1:1s, performance reviews, and career development conversations
+Champion diversity, equity, and inclusion initiatives within the engineering organization
+Strategic Planning & Execution
+
+Partner with Product Management to define AI product roadmap and priorities
+Translate business objectives into technical initiatives and measurable outcomes
+Manage multiple concurrent AI/ML projects from conception to production deployment
+Establish and track KPIs for team performance, model quality, and system reliability
+Balance innovation with pragmatic delivery to meet business deadlines
+Cross-functional Collaboration
+
+Work closely with Data Science, Product, Design, and other engineering teams
+Communicate technical concepts and trade-offs to non-technical stakeholders
+Represent engineering in executive discussions and strategic planning sessions
+Build relationships with external partners, vendors, and research institutions
+Drive alignment across teams on AI ethics, responsible AI practices, and governance
+Operational Excellence
+
+Establish best practices for ML model development, testing, and deployment
+Implement MLOps practices for continuous integration and deployment of ML models
+Ensure compliance with data privacy regulations and AI governance policies
+Drive improvements in model monitoring, A/B testing, and experimentation frameworks
+Manage engineering budget and resource allocation
+Required Qualifications
+
+Experience
+
+13+ years of software engineering experience, with 5+ years focused on ML/AI systems
+5+ years of engineering management experience, including managing managers
+Proven track record of shipping ML products at scale in production environments
+Experience with full ML lifecycle: data collection, feature engineering, model training, deployment, and monitoring
+Technical Skills
+
+Deep understanding of machine learning algorithms, deep learning, and statistical methods
+Proficiency in ML frameworks (TensorFlow, PyTorch, JAX) and programming languages (Python, Scala, Java)
+Experience with distributed computing frameworks (Spark, Ray) and cloud platforms (AWS, GCP, Azure)
+Knowledge of MLOps tools and practices (Kubeflow, MLflow, Airflow, Docker, Kubernetes)
+Understanding of data engineering, ETL pipelines, and big data technologies
+Leadership Competencies
+
+Demonstrated ability to build and scale engineering teams
+Strong communication skills with ability to influence at all levels of the organization
+Experience driving technical strategy and making architectural decisions
+Track record of successful cross-functional collaboration and stakeholder management
+Ability to balance technical depth with business acumen
+Preferred Qualifications
+
+Advanced degree (MS/PhD) in Computer Science, Machine Learning, or related field
+Deep experience with Large Language Models (LLMs), Small Language Models (SLMs), and generative AI applications
+Expertise in building production AI agent systems:
+Multi-agent architectures and swarm intelligence
+Memory systems: short-term, long-term, episodic, and semantic memory
+Planning algorithms: hierarchical planning, goal decomposition, and backtracking
+Tool use and function calling optimization
+Agent communication protocols and coordination strategies
+Experience with advanced agent frameworks: DSPy, Guidance, LMQL, Outlines for constrained generation
+Knowledge of prompt engineering techniques: few-shot, chain-of-thought, self-consistency, constitutional AI
+Experience with RAG architectures: vector stores, hybrid search, re-ranking, and query optimization
+Expertise in training techniques: supervised fine-tuning, RLHF, DPO, PPO, constitutional AI, and synthetic data generation
+Experience with parameter-efficient fine-tuning methods: LoRA, QLoRA, prefix tuning, and adapter layers
+Knowledge of model optimization techniques: quantization (INT8, INT4), distillation, pruning, and flash attention
+Extensive experience in dataset curation for LLM training:
+Web-scale data processing (Common Crawl, C4, RefinedWeb methodologies)
+Creating instruction-tuning datasets (Alpaca, Dolly, FLAN-style formats)
+Building preference datasets for RLHF/DPO training
+Domain adaptation and specialized corpus creation
+Multi-lingual and code dataset preparation
+Knowledge of data mixing strategies, replay buffers, and curriculum learning for optimal training
+Experience with data augmentation techniques: paraphrasing, back-translation, and synthetic data generation using LLMs
+Expertise in data decontamination and benchmark pollution prevention
+Experience with workflow automation platforms: n8n, Zapier, Make for business process automation
+Knowledge of enterprise integration patterns: event-driven architectures, saga patterns, and CQRS
+Strong background in data science: statistical analysis, A/B testing, experimentation design, and causal inference
+Experience with data mesh architectures and building self-serve data platforms
+Expertise in data quality frameworks, data contracts, and SLA management for data pipelines
+Experience with vector databases (Pinecone, Weaviate, Qdrant, Milvus, ChromaDB, FAISS) and embedding systems
+Knowledge of privacy-preserving ML techniques: differential privacy, federated learning, secure multi-party computation
+Background in specific AI domains: NLP, Computer Vision, Recommendation Systems, or Reinforcement Learning
+Experience with LLM evaluation frameworks and benchmarking (HELM, EleutherAI eval harness, BigBench)
+Hands-on experience with popular LLM frameworks: Hugging Face Transformers, vLLM, TGI, Ollama, LiteLLM
+Experience with dataset processing tools: Datasets library, Apache Beam, Spark NLP
+Publications or contributions to open-source ML projects
+Experience in high-growth technology companies or AI-first organizations
+Knowledge of AI safety, ethics, and responsible AI practices
+Experience with multi-modal models and vision-language models
+What We Offer
+
+Opportunity to work on cutting-edge AI technology with real-world impact
+Competitive compensation package including equity
+Access to state-of-the-art computing resources and research tools
+Budget for conferences, training, and professional development
+Collaborative environment with talented engineers and researchers
+Flexible work arrangements and comprehensive benefits
+
+Role: Data Science & Machine Learning - Other
+Industry Type: Software Product
+Department: Data Science & Analytics
+Employment Type: Full Time, Permanent
+Role Category: Data Science & Machine Learning
